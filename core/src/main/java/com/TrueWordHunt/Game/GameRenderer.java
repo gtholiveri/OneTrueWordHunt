@@ -77,7 +77,13 @@ public class GameRenderer implements Disposable {
 
     private Color getColor() {
         String currWord = screen.getGameEngine().getCurrWord();
-        if (screen.getGameEngine().isWord(currWord)) {
+        GameEngine engine = screen.getGameEngine();
+
+
+
+        if (engine.getWordsFound().contains(currWord)) {
+            return new Color(1f, 1f, 0f, 0.5f);
+        } else if (engine.isWord(currWord)) {
             // this is a valid word! color line green
             return new  Color(0f, 1.0f, 0f, 0.5f);
         } else if (screen.getGameEngine().startsWord(currWord)) {
