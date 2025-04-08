@@ -4,38 +4,44 @@ import com.TrueWordHunt.Util.Dictionary;
 import com.TrueWordHunt.Util.Position;
 import com.badlogic.gdx.Gdx;
 
-
 import java.util.ArrayList;
 
 public class GameEngine {
     private ArrayList<Position> currPath;
 
-    private char[][] board;
-    private Dictionary dictionary;
+    private ArrayList<String> wordsFound;
 
+    private final int[] wordScores = new int[]{0, 0, 0, 100, 400, 800, 1400, 1800, 2200, 3000, 3400, 3800, 4200, 4600, 5000, 5400, 5800, 6200, 10000};
+    private char[][] board;
+
+    private Dictionary dictionary;
 
     public GameEngine(int boardSize, Dictionary dictionary) {
         currPath = new ArrayList<Position>();
+        wordsFound = new ArrayList<>();
 
         board = new char[boardSize][boardSize];
         initBoard();
 
-//        Runtime runtime = Runtime.getRuntime();
-//        long before = runtime.totalMemory() - runtime.freeMemory();
         this.dictionary = dictionary;
-//        long after = runtime.totalMemory() - runtime.freeMemory();
-//        System.out.println("Dictionary currently using " + (after - before) / (1024 * 1024) + " MB");
-
     }
 
     public String getCurrWord() {
         StringBuilder sb = new StringBuilder();
 
-        for (Position p: currPath) {
+        for (Position p : currPath) {
             sb.append(board[p.getRow()][p.getCol()]);
         }
 
         return sb.toString().toLowerCase();
+    }
+
+    public String getCurrWord(boolean uppercase) {
+        if (uppercase) {
+            return getCurrWord().toUpperCase();
+        } else {
+            return getCurrWord();
+        }
     }
 
     public void click(int row, int col) {
@@ -50,7 +56,21 @@ public class GameEngine {
     }
 
     public void unClick() {
+
+        String currWord = getCurrWord();
+        if (isWord(currWord) && !wordsFound.contains(currWord)) {
+            wordsFound.add(currWord);
+        }
+
         currPath.clear();
+    }
+
+    public int getScore() {
+        int score = 0;
+        for (String word : wordsFound) {
+            score += wordScores[word.length()];
+        }
+        return score;
     }
 
     private boolean isValidNextPos(Position currPos) {
@@ -58,7 +78,6 @@ public class GameEngine {
             // if this is the first selection, by default it's fine
             return true;
         }
-        Position lastPos = currPath.get(currPath.size() - 1);
 
         if (currPath.contains(currPos)) {
             // this position has already been selected: not valid
@@ -70,7 +89,8 @@ public class GameEngine {
             return false;
         }
 
-        if (!(lastPos.nextTo(currPos))){
+        Position lastPos = currPath.get(currPath.size() - 1);
+        if (!(lastPos.nextTo(currPos))) {
             // if it's not exactly 1 away from the last thing, not allowed
             return false;
         }
@@ -121,6 +141,9 @@ public class GameEngine {
         return dictionary.hasPrefix(word);
     }
 
+    public ArrayList<String> getWordsFound() {
+        return wordsFound;
+    }
 }
 
 

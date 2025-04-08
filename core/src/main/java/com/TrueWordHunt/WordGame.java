@@ -11,6 +11,12 @@ import com.kotcrab.vis.ui.VisUI;
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class WordGame extends Game {
 
+    // TODO Create an end screen class
+    // TODO Create a timer class that will control entry to the end screen
+    // TODO Create a FinalScoreStage class with methods to render a final score thing
+    // TODO Get sizing to be DYNAMIC based on the screen dimensions
+    // TODO Create a camera panner class that will be able to swoop things in and out to the left and right
+    // TODO Maybe implement dynamic tile size and color as selected?
     public MenuScreen menuScreen;
     private GameScreen gameScreen;
     public final float STARTING_WIDTH = 1000;

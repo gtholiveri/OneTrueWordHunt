@@ -14,6 +14,9 @@ public class GameStage extends Stage {
     // the instance of the game
     private WordGame game;
     private GameScreen screen;
+    private GameEngine gameEngine;
+    private GameUIStage gameUI;
+
 
     private Tile[][] tiles;
 
@@ -23,14 +26,19 @@ public class GameStage extends Stage {
 
         this.game = game;
         this.screen = screen;
-        int size = screen.getGameEngine().getBoard().length;
+        this.gameEngine = screen.getGameEngine();
+        this.gameUI = screen.getGameUIStage();
+
+        int size = gameEngine.getBoard().length;
         tiles = new Tile[size][size];
 
+
+
         setupBoard();
-        setupDragListener();
+        setupDragListeners();
     }
 
-    private void setupDragListener() {
+    private void setupDragListeners() {
         DragListener dragListener = new DragListener() {
 
             @Override
@@ -39,8 +47,12 @@ public class GameStage extends Stage {
                     for (Tile tile : row) {
                         Vector2 local = tile.stageToLocalCoordinates(new Vector2(x, y));
                         if (tile.hit(local.x, local.y, true) != null) {
-                            //System.out.println("Letter " + tile.getText() + " dragged at position (" + tile.getRow() + ", " + tile.getCol() + ")");
-                            screen.getGameEngine().click(tile.getRow(), tile.getCol());
+                            GameEngine engine = screen.getGameEngine();
+                            GameUIStage ui = screen.getGameUIStage();
+
+                            gameEngine.click(tile.getRow(), tile.getCol());
+                            gameUI.setCurrWord(engine.getCurrWord(true));
+                            gameUI.setScore(engine.getScore());
                         }
                     }
                 }
@@ -49,11 +61,13 @@ public class GameStage extends Stage {
             @Override
             public void dragStop(InputEvent event, float x, float y, int pointer) {
                 //System.out.println("Drag terminated");
-                screen.getGameEngine().unClick();
+                gameEngine.unClick();
+                gameUI.setCurrWord("");
+                gameUI.setScore(screen.getGameEngine().getScore());
+                gameUI.setWordsFound(gameEngine.getWordsFound().size());
+
             }
         };
-
-
         this.addListener(dragListener);
     }
 
@@ -62,7 +76,6 @@ public class GameStage extends Stage {
         boardTable.setFillParent(true);
         boardTable.center();
         boardTable.defaults().space(30f);
-        boardTable.debug();
 
 
         VisImageTextButton.VisImageTextButtonStyle buttonStyle = game.getStyleGenerator().createImageTextButtonStyle(140, "bebas_extra_bold.ttf", Color.BLACK);
@@ -74,14 +87,6 @@ public class GameStage extends Stage {
                 Tile curr = new Tile(Character.toString(board[row][col]), buttonStyle, row, col);
                 tiles[row][col] = curr;
 
-                //                curr.addListener(new ClickListener() {
-//
-//                    @Override
-//                    public void clicked(InputEvent event, float x, float y) {
-//                        // Your logic here
-//                        System.out.println("Board Tile: Letter " + curr.getText() + " clicked!");
-//                    }
-//                });
                 boardTable.add(curr).size(200);
             }
             boardTable.row();

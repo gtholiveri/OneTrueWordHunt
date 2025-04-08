@@ -11,13 +11,12 @@ public class Tile extends VisImageTextButton {
     private int col;
 
     private float centerX;
-
     private float centerY;
 
     private final float WIDTH_TO_RADIUS_RATIO = 2f;
 
     /**
-     * @param text Button text
+     * @param text  Button text
      * @param style Button style
      */
     public Tile(String text, VisImageTextButtonStyle style, int row, int col) {
@@ -50,14 +49,12 @@ public class Tile extends VisImageTextButton {
     public void drawDebug(ShapeRenderer shapes) {
         super.drawDebug(shapes); // Draw default debug
 
-        // Draw circle hitbox
-        shapes.set(ShapeRenderer.ShapeType.Line);
-        shapes.setColor(Color.RED);
-        shapes.circle(
-            getX() + getWidth() / 2f,
-            getY() + getHeight() / 2f,
-            getWidth() / WIDTH_TO_RADIUS_RATIO
-        );
+        if (getDebug()) {
+            // Draw circle hitbox
+            shapes.set(ShapeRenderer.ShapeType.Line);
+            shapes.setColor(Color.RED);
+            shapes.circle(getX() + getWidth() / 2f, getY() + getHeight() / 2f, getWidth() / WIDTH_TO_RADIUS_RATIO);
+        }
     }
 
     public int getCol() {

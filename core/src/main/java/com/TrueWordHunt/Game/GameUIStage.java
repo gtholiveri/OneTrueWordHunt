@@ -126,10 +126,10 @@ public class GameUIStage extends Stage {
 
 
 
-        scoreLabel = new VisLabel("Score: SCORE HERE", scoreLabelStyle);
+        scoreLabel = new VisLabel("Score: 0", scoreLabelStyle);
         wordsFoundLabel = new VisLabel("Words Found: 0", defaultLabelStyle);
         timeRemainingLabel = new VisLabel("Time Remaining: TIME HERE", defaultLabelStyle);
-        currWordLabel = new VisLabel("WORD HERE", defaultLabelStyle);
+        currWordLabel = new VisLabel("", defaultLabelStyle);
 
         infoTable.add(scoreLabel).left().row();
         infoTable.add(wordsFoundLabel).left().row();
