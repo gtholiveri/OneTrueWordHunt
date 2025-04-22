@@ -1,5 +1,6 @@
 package com.TrueWordHunt.Game;
 
+import com.TrueWordHunt.Util.Timer;
 import com.TrueWordHunt.WordGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -44,6 +45,9 @@ public class GameUIStage extends Stage {
     private VisLabel timeRemainingLabel;
     private VisLabel currWordLabel;
 
+    // timer
+    private Timer timer;
+
 
     private ShapeRenderer shapeRenderer;
 
@@ -62,6 +66,10 @@ public class GameUIStage extends Stage {
         setupHomeButton();
         setupInfoBox();
         addButtonAction();
+
+        setupFinishButton();
+
+        timer = new Timer(90);
     }
 
 
@@ -81,6 +89,8 @@ public class GameUIStage extends Stage {
 
         batch.end();
 
+        timeRemainingLabel.setText(timer.update());
+
         super.draw();
     }
 
@@ -96,10 +106,33 @@ public class GameUIStage extends Stage {
         // create the button, add it to a centered table, scale it to good-looking size
         homeButton = new VisTextButton("Home", homeButtonStyle);
 
-        homeButtonTable.add(homeButton).width(100).height(50).pad(20).top().left();
+        homeButtonTable.add(homeButton).width(100).height(50).pad(20);
 
 
         this.addActor(homeButtonTable);
+    }
+
+    private void setupFinishButton() {
+        VisTable finishButtonTable = new VisTable();
+        finishButtonTable.setFillParent(true);
+
+        finishButtonTable.setTransform(true);
+        finishButtonTable.align(Align.top | Align.right);
+
+        finishButtonTable.debug();
+
+        VisTextButton finishButton = new VisTextButton("Finish", homeButtonStyle);
+        finishButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.gameOver();
+            }
+        });
+
+
+        finishButtonTable.add(finishButton).width(100).height(50).pad(20);
+
+        this.addActor(finishButtonTable);
     }
 
     /**
@@ -120,15 +153,9 @@ public class GameUIStage extends Stage {
         infoTable.setFillParent(false);
         //infoTable.debug();
 
-        //infoTable.setBackground(game.getStyleGenerator().getTableBG());
-
-
-
-
-
         scoreLabel = new VisLabel("Score: 0", scoreLabelStyle);
         wordsFoundLabel = new VisLabel("Words Found: 0", defaultLabelStyle);
-        timeRemainingLabel = new VisLabel("Time Remaining: TIME HERE", defaultLabelStyle);
+        timeRemainingLabel = new VisLabel("", defaultLabelStyle);
         currWordLabel = new VisLabel("", defaultLabelStyle);
 
         infoTable.add(scoreLabel).left().row();

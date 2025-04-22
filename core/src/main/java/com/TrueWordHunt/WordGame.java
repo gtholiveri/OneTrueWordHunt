@@ -1,5 +1,6 @@
 package com.TrueWordHunt;
 
+import com.TrueWordHunt.End.EndScreen;
 import com.TrueWordHunt.Game.GameScreen;
 import com.TrueWordHunt.Menu.MenuScreen;
 import com.TrueWordHunt.Util.BackgroundRenderer;
@@ -17,6 +18,8 @@ public class WordGame extends Game {
     // TODO Get sizing to be DYNAMIC based on the screen dimensions
     // TODO Create a camera panner class that will be able to swoop things in and out to the left and right
     // TODO Maybe implement dynamic tile size and color as selected?
+
+
     public MenuScreen menuScreen;
     private GameScreen gameScreen;
     public final float STARTING_WIDTH = 1000;
@@ -75,6 +78,15 @@ public class WordGame extends Game {
     public void newGame() {
         gameScreen = new GameScreen(this, dictionary);
         this.setScreen(gameScreen);
+    }
+
+    public void gameOver() {
+
+        if (getScreen() instanceof GameScreen) {
+            setScreen(new EndScreen(this, ((GameScreen) getScreen()).getGameEngine()));
+        }
+
+
     }
 
     public StyleGenerator getStyleGenerator() {
