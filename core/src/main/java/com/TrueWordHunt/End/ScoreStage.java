@@ -53,10 +53,10 @@ public class ScoreStage extends Stage {
         scorePaneContents.add(new VisLabel("WORDS FOUND: ", headerStyle)).left().row();
 
 
-        String[] testWords = new String[] {"thing", "galadriel", "test", "minas tirith", "uruk hai", "lothlorien", "numenor", "got", "cooked", "etc", "tar valon", "cairhien", "andor", "tear"};
+        // String[] testWords = new String[] {"thing", "galadriel", "test", "minas tirith", "uruk hai", "lothlorien", "numenor", "got", "cooked", "etc", "tar valon", "cairhien", "andor", "tear"};
         // add every row to the contents
         Label.LabelStyle bodyStyle = styleGenerator.createLabelStyle(36, "bebas_medium.ttf", Color.BLACK);
-        for (String word : testWords) {
+        for (String word : wordsFound) {
             scorePaneContents.add(new VisLabel(word.toUpperCase(), bodyStyle)).left();
             scorePaneContents.add(new VisLabel(Integer.toString(engine.computeWordScore(word)), bodyStyle)).right().row();
         }
