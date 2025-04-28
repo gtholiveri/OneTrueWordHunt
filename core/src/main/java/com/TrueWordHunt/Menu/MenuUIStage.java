@@ -47,7 +47,7 @@ public class MenuUIStage extends Stage {
 
     private void setupUI() {
         table.setFillParent(true);
-        table.debug();
+        //table.debug();
 
 
         // create the button, add it to a centered table

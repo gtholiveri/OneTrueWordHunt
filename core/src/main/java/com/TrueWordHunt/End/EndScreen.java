@@ -23,7 +23,7 @@ public class EndScreen implements Screen {
     public EndScreen(WordGame game, GameEngine engine) {
         this.game = game;
         this.engine = engine;
-        scoreStage = new ScoreStage(game, new ScreenViewport());
+        scoreStage = new ScoreStage(game, this, new ScreenViewport());
     }
 
     @Override
@@ -31,6 +31,9 @@ public class EndScreen implements Screen {
 
 
 
+    }
+
+    private void dislayScore() {
 
     }
 
@@ -65,5 +68,9 @@ public class EndScreen implements Screen {
     @Override
     public void dispose() {
         // Destroy screen's assets here.
+    }
+
+    public GameEngine getEngine() {
+        return engine;
     }
 }

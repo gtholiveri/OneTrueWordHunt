@@ -1,6 +1,8 @@
 package com.TrueWordHunt.Game;
 
+import com.TrueWordHunt.Util.ClipDrawer;
 import com.TrueWordHunt.WordGame;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -17,8 +19,9 @@ public class GameStage extends Stage {
     private GameEngine gameEngine;
     private GameUIStage gameUI;
 
-
     private Tile[][] tiles;
+
+    private int tileSize;
 
 
     public GameStage(Viewport viewport, WordGame game, GameScreen screen) {
@@ -29,9 +32,11 @@ public class GameStage extends Stage {
         this.gameEngine = screen.getGameEngine();
         this.gameUI = screen.getGameUIStage();
 
+
         int size = gameEngine.getBoard().length;
         tiles = new Tile[size][size];
 
+        tileSize = Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) / 6;
 
 
         setupBoard();
@@ -78,7 +83,7 @@ public class GameStage extends Stage {
         boardTable.defaults().space(30f);
 
 
-        VisImageTextButton.VisImageTextButtonStyle buttonStyle = game.getStyleGenerator().createImageTextButtonStyle(140, "bebas_extra_bold.ttf", Color.BLACK);
+        VisImageTextButton.VisImageTextButtonStyle buttonStyle = game.getStyleGenerator().createImageTextButtonStyle((int) (0.9 * tileSize), "bebas_extra_bold.ttf", Color.BLACK);
 
         char[][] board = screen.getGameEngine().getBoard();
 
@@ -87,7 +92,7 @@ public class GameStage extends Stage {
                 Tile curr = new Tile(Character.toString(board[row][col]), buttonStyle, row, col);
                 tiles[row][col] = curr;
 
-                boardTable.add(curr).size(200);
+                boardTable.add(curr).size(tileSize);
             }
             boardTable.row();
         }
@@ -99,8 +104,16 @@ public class GameStage extends Stage {
 
     }
 
+    @Override
+    public void draw() {
+
+
+        super.draw();
+    }
+
     public Tile[][] getTiles() {
         return tiles;
     }
+
 
 }

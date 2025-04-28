@@ -144,6 +144,16 @@ public class GameEngine {
     public ArrayList<String> getWordsFound() {
         return wordsFound;
     }
+
+    public int computeWordScore(String word) {
+        int n = word.length();
+
+        if (n > wordScores.length) {
+            return wordScores[wordScores.length - 1];
+        } else {
+            return wordScores[n];
+        }
+    }
 }
 
 
