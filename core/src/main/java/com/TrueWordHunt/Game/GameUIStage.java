@@ -90,6 +90,9 @@ public class GameUIStage extends Stage {
         batch.end();
 
         timeRemainingLabel.setText(timer.update());
+        if (timer.isFinished()) {
+            game.gameOver();
+        }
 
         super.draw();
     }

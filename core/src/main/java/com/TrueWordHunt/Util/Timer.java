@@ -25,4 +25,11 @@ public class Timer {
         return String.format("%02d:%02d", min, sec);
     }
 
+    public float getSecondsRemaining() {
+        return secondsRemaining;
+    }
+
+    public boolean isFinished() {
+        return secondsRemaining <= 0;
+    }
 }
