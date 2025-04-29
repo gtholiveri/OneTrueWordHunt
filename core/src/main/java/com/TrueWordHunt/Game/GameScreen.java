@@ -45,6 +45,7 @@ public class GameScreen implements Screen, Swoopable {
 
         gameRenderer = new GameRenderer(this, gameStage);
 
+        nextScreen = null;
     }
 
 
@@ -136,6 +137,5 @@ public class GameScreen implements Screen, Swoopable {
         nextScreen = screen;
         panner.swoopToRight(1.5f);
         isExiting = true;
-
     }
 }

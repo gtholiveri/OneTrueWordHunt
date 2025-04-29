@@ -48,6 +48,8 @@ public class GameUIStage extends Stage {
 
     private ShapeRenderer shapeRenderer;
 
+    private boolean timerHasFired;
+
     public GameUIStage(Viewport viewport, WordGame game) {
         super(viewport);
         this.game = game;
@@ -69,6 +71,8 @@ public class GameUIStage extends Stage {
         timer = new Timer(60);
 
         firstPass = true;
+
+        timerHasFired = false;
     }
 
 
@@ -82,7 +86,7 @@ public class GameUIStage extends Stage {
         float x = pos.x - 30;
         float y = pos.y - 30;
         float width = infoTable.getWidth() + 60;
-        float height = infoTable.getHeight() + 50;
+        float height = infoTable.getHeight() + 40;
 
 
         if (firstPass) {
@@ -93,8 +97,9 @@ public class GameUIStage extends Stage {
         batch.end();
 
         timeRemainingLabel.setText(timer.update());
-        if (timer.isFinished()) {
+        if (timer.isFinished() && !timerHasFired) {
             game.gameOver();
+            timerHasFired = true;
         }
 
         super.draw();
@@ -176,7 +181,10 @@ public class GameUIStage extends Stage {
         infoTable.pack();
 
         this.addActor(wrapper);
+
+
     }
+
 
 
     private void addButtonAction() {
@@ -233,5 +241,9 @@ public class GameUIStage extends Stage {
 
     public VisTable getInfoTable() {
         return infoTable;
+    }
+
+    public float getInfoTableDistFromTop() {
+        return Gdx.graphics.getHeight() - (infoTable.getY());
     }
 }

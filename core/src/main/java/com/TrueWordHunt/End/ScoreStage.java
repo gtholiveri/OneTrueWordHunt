@@ -3,6 +3,7 @@ package com.TrueWordHunt.End;
 import com.TrueWordHunt.Game.GameEngine;
 import com.TrueWordHunt.Util.StyleGenerator;
 import com.TrueWordHunt.WordGame;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -104,6 +105,7 @@ public class ScoreStage extends Stage {
     private void addButtonAction() {
         homeButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.log("Home Button", "trying to go home");
                 game.goHome();
             }
 

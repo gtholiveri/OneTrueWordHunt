@@ -8,6 +8,7 @@ import com.TrueWordHunt.Util.Dictionary;
 import com.TrueWordHunt.Util.StyleGenerator;
 import com.TrueWordHunt.Util.Swoopable;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.kotcrab.vis.ui.VisUI;
 
 /**
@@ -90,9 +91,10 @@ public class WordGame extends Game {
 
     public void gameOver() {
 
-        if (getScreen() instanceof GameScreen) {
+        if (this.getScreen() instanceof GameScreen) {
+            Gdx.app.log("Game Over", "trying to advance");
             GameScreen scr = (GameScreen) getScreen();
-            scr.swoopAndSwitch(new EndScreen(this, ((GameScreen) getScreen()).getGameEngine()));
+            scr.swoopAndSwitch(new EndScreen(this, scr.getGameEngine()));
         }
 
 
