@@ -19,7 +19,7 @@ Copyright © 2006-2023 Behdad Esfahbod
 Copyright © 1998-2004  David Turner and Werner Lemberg
 Copyright © 2009  Keith Stribley
 Copyright © 2018  Khaled Hosny
-Copyright © 2016  Elie Roux <elie.roux@telecom-bretagne.eu>
+Copyright © 2016  Elie Roux (elie.roux@telecom-bretagne.eu)
 Copyright © 2016  Igalia S.L.
 Copyright © 2015  Mozilla Foundation.
 Copyright © 1999  David Turner
@@ -57,7 +57,7 @@ The contents of this directory are licensed under the following terms:
 The below license applies to the following files:
 libharfbuzz/hb-ucd.cc
 
-Copyright (C) 2012 Grigori Goronzy <greg@kinoho.net>
+Copyright (C) 2012 Grigori Goronzy (greg@kinoho.net)
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
