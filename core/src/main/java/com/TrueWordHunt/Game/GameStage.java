@@ -1,8 +1,10 @@
 package com.TrueWordHunt.Game;
 
 import com.TrueWordHunt.Util.ClipDrawer;
+import com.TrueWordHunt.Util.Swoopable;
 import com.TrueWordHunt.WordGame;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -65,7 +67,6 @@ public class GameStage extends Stage {
 
             @Override
             public void dragStop(InputEvent event, float x, float y, int pointer) {
-                //System.out.println("Drag terminated");
                 gameEngine.unClick();
                 gameUI.setCurrWord("");
                 gameUI.setScore(screen.getGameEngine().getScore());
@@ -80,7 +81,7 @@ public class GameStage extends Stage {
         VisTable boardTable = new VisTable();
         boardTable.setFillParent(true);
         boardTable.center();
-        boardTable.defaults().space(30f);
+        boardTable.defaults().space(tileSize / 10);
 
 
         VisImageTextButton.VisImageTextButtonStyle buttonStyle = game.getStyleGenerator().createImageTextButtonStyle((int) (0.9 * tileSize), "bebas_extra_bold.ttf", Color.BLACK);

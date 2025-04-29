@@ -52,7 +52,7 @@ public class StyleGenerator implements Disposable {
 
     public NinePatchDrawable getTableBG() {
         if (infoTableBGDrawable == null) {
-            initializeTableBG("infotablebackground.png");
+            initializeTableBG("attempt3.png");
         }
 
         return infoTableBGDrawable;
@@ -62,7 +62,7 @@ public class StyleGenerator implements Disposable {
         Texture texture = new Texture(Gdx.files.internal(imagePath));
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear); // For crisp scaling
 
-        NinePatch ninePatch = new NinePatch(texture, 0, 0, 0, 0);
+        NinePatch ninePatch = new NinePatch(texture, 50, 50, 50, 50);
 
 
         infoTableBGDrawable = new NinePatchDrawable(ninePatch);

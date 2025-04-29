@@ -3,6 +3,7 @@ package com.TrueWordHunt.End;
 import com.TrueWordHunt.Game.GameEngine;
 import com.TrueWordHunt.Util.StyleGenerator;
 import com.TrueWordHunt.WordGame;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -28,7 +29,7 @@ public class EndScreen implements Screen {
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(scoreStage);
 
 
     }

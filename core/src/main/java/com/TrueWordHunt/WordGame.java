@@ -6,10 +6,13 @@ import com.TrueWordHunt.Menu.MenuScreen;
 import com.TrueWordHunt.Util.BackgroundRenderer;
 import com.TrueWordHunt.Util.Dictionary;
 import com.TrueWordHunt.Util.StyleGenerator;
+import com.TrueWordHunt.Util.Swoopable;
 import com.badlogic.gdx.Game;
 import com.kotcrab.vis.ui.VisUI;
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
+/**
+ * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
+ */
 public class WordGame extends Game {
 
     // TODO Create an end screen class
@@ -20,8 +23,6 @@ public class WordGame extends Game {
     // TODO Maybe implement dynamic tile size and color as selected?
 
 
-    public MenuScreen menuScreen;
-    private GameScreen gameScreen;
     public final float STARTING_WIDTH = 1000;
     public final float STARTING_HEIGHT = 1500;
 
@@ -38,8 +39,7 @@ public class WordGame extends Game {
         styleGenerator = new StyleGenerator();
 
 
-        menuScreen = new MenuScreen(this);
-        setScreen(menuScreen);
+        setScreen(new MenuScreen(this));
 
     }
 
@@ -75,15 +75,24 @@ public class WordGame extends Game {
 
     }
 
+    public void goHome() {
+        if (getScreen() instanceof Swoopable) {
+            ((Swoopable) getScreen()).swoopAndSwitch(new MenuScreen(this));
+        }
+    }
+
     public void newGame() {
-        gameScreen = new GameScreen(this, dictionary);
-        this.setScreen(gameScreen);
+
+        if (this.getScreen() instanceof MenuScreen) {
+            ((MenuScreen) this.getScreen()).swoopAndSwitch(new GameScreen(this, dictionary));
+        }
     }
 
     public void gameOver() {
 
         if (getScreen() instanceof GameScreen) {
-            setScreen(new EndScreen(this, ((GameScreen) getScreen()).getGameEngine()));
+            GameScreen scr = (GameScreen) getScreen();
+            scr.swoopAndSwitch(new EndScreen(this, ((GameScreen) getScreen()).getGameEngine()));
         }
 
 

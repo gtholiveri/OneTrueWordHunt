@@ -4,13 +4,16 @@ import com.TrueWordHunt.Game.GameEngine;
 import com.TrueWordHunt.Util.StyleGenerator;
 import com.TrueWordHunt.WordGame;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisScrollPane;
 import com.kotcrab.vis.ui.widget.VisTable;
+import com.kotcrab.vis.ui.widget.VisTextButton;
 
 import java.util.ArrayList;
 
@@ -25,6 +28,11 @@ public class ScoreStage extends Stage {
 
     private StyleGenerator styleGenerator;
 
+    private VisTextButton homeButton;
+    private VisTextButton.VisTextButtonStyle homeButtonStyle;
+
+
+
     public ScoreStage(WordGame game, EndScreen screen, Viewport viewport) {
         super(viewport);
 
@@ -36,7 +44,7 @@ public class ScoreStage extends Stage {
 
         // create the overarching table
         VisTable scoreTable = new VisTable();
-        scoreTable.debug();
+        //scoreTable.debug();
         scoreTable.setFillParent(true);
         scoreTable.setTransform(true);
         scoreTable.align(Align.center);
@@ -46,14 +54,14 @@ public class ScoreStage extends Stage {
 
         // create the table holding the contents of the scroll pane
         VisTable scorePaneContents = new VisTable();
-        scorePaneContents.debug();
+        //scorePaneContents.debug();
 
         // add the header to the contents
         Label.LabelStyle headerStyle = styleGenerator.createLabelStyle(52, "bebas_bold.ttf", Color.BLACK);
         scorePaneContents.add(new VisLabel("WORDS FOUND: ", headerStyle)).left().row();
 
 
-        // String[] testWords = new String[] {"thing", "galadriel", "test", "minas tirith", "uruk hai", "lothlorien", "numenor", "got", "cooked", "etc", "tar valon", "cairhien", "andor", "tear"};
+        //String[] testWords = new String[] {"thing", "galadriel", "test", "minas tirith", "uruk hai", "lothlorien", "numenor", "got", "cooked", "etc", "tar valon", "cairhien", "andor", "tear", "row", "row", "row", "row", "row", "row", "row", "row"};
         // add every row to the contents
         Label.LabelStyle bodyStyle = styleGenerator.createLabelStyle(36, "bebas_medium.ttf", Color.BLACK);
         for (String word : wordsFound) {
@@ -64,17 +72,42 @@ public class ScoreStage extends Stage {
 
 
         VisScrollPane scorePane = new VisScrollPane(scorePaneContents);
-        scorePane.setFadeScrollBars(false); // Prevent scrollbars from fading out
-        scorePane.setForceScroll(false, true); // Force vertical scrollbar track to always show (doesn't guarantee scrolling works if content fits)
-
 
         scoreTable.add(scorePane);
 
-
-        //(new VisTextButton("TEST SUCCESSFUL", styleGenerator.createTextButtonStyle(72, "bebas_bold.ttf", new Color(1f, 1f, 1f, 1f))));
-
         this.addActor(scoreTable);
 
+        homeButtonStyle = styleGenerator.createTextButtonStyle(36, "bebas_extra_bold.ttf", Color.WHITE);
+        setupHomeButton();
+        addButtonAction();
+
+    }
+
+
+    private void setupHomeButton() {
+        VisTable homeButtonTable = new VisTable();
+        homeButtonTable.setFillParent(true);
+
+        homeButtonTable.setTransform(true);          // Makes table respect pixel coordinates
+        homeButtonTable.align(Align.top | Align.left); // Forces top-left anchor point
+
+
+        // create the button, add it to a centered table, scale it to good-looking size
+        homeButton = new VisTextButton("Home", homeButtonStyle);
+
+        homeButtonTable.add(homeButton).width(100).height(50).pad(20);
+
+
+        this.addActor(homeButtonTable);
+    }
+
+    private void addButtonAction() {
+        homeButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                game.goHome();
+            }
+
+        });
     }
 
 }

@@ -9,18 +9,14 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
-import net.dermetfan.gdx.physics.box2d.PositionController;
 
 public class GameUIStage extends Stage {
     // the instance of the game
@@ -48,6 +44,7 @@ public class GameUIStage extends Stage {
     // timer
     private Timer timer;
 
+    private boolean firstPass;
 
     private ShapeRenderer shapeRenderer;
 
@@ -69,7 +66,9 @@ public class GameUIStage extends Stage {
 
         setupFinishButton();
 
-        timer = new Timer(90);
+        timer = new Timer(60);
+
+        firstPass = true;
     }
 
 
@@ -85,8 +84,12 @@ public class GameUIStage extends Stage {
         float width = infoTable.getWidth() + 60;
         float height = infoTable.getHeight() + 50;
 
-        bg.draw(batch, x, y, width, height);
 
+        if (firstPass) {
+            firstPass = false;
+        } else {
+            bg.draw(batch, x, y, width, height);
+        }
         batch.end();
 
         timeRemainingLabel.setText(timer.update());
@@ -100,7 +103,6 @@ public class GameUIStage extends Stage {
     private void setupHomeButton() {
         VisTable homeButtonTable = new VisTable();
         homeButtonTable.setFillParent(true);
-        //homeButtonTable.debug();
 
         homeButtonTable.setTransform(true);          // Makes table respect pixel coordinates
         homeButtonTable.align(Align.top | Align.left); // Forces top-left anchor point
@@ -122,7 +124,6 @@ public class GameUIStage extends Stage {
         finishButtonTable.setTransform(true);
         finishButtonTable.align(Align.top | Align.right);
 
-        finishButtonTable.debug();
 
         VisTextButton finishButton = new VisTextButton("Finish", homeButtonStyle);
         finishButton.addListener(new ClickListener() {
@@ -140,9 +141,9 @@ public class GameUIStage extends Stage {
 
     /**
      * Subroutine that sets up all the elements in the main information box.
-     *
+     * <p>
      * Includes score, words found, time remaining, and current word
-     * */
+     */
     private void setupInfoBox() {
         // create a wrapper that fills the whole screen
         wrapper = new VisTable();
@@ -171,7 +172,6 @@ public class GameUIStage extends Stage {
         // add the infoTable to the wrapper
         wrapper.add(infoTable).top().padTop(20);
 
-        //infoTable.setBackground(game.getStyleGenerator().getTableBG());
 
         infoTable.pack();
 
@@ -179,11 +179,10 @@ public class GameUIStage extends Stage {
     }
 
 
-
     private void addButtonAction() {
         homeButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(game.menuScreen);
+                game.goHome();
             }
 
         });
