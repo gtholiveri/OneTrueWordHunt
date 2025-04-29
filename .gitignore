@@ -116,7 +116,6 @@ www-test/
 /server/nbbuild/
 /shared/nbbuild/
 
-/dist/
 /android/dist/
 /core/dist/
 /lwjgl2/dist/
