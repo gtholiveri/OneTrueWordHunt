@@ -2,7 +2,9 @@
 ## How to run
 Clone repository in intellij, create a new application run configuration, and select the Lwjgl3Launcher class as the
 main class.
+
 OR
+
 Check the build folder for a latest stable build that will run on your device. On macOS, that will be a .app bundle
 (these have to be run from the command line though because Apple is annoying, so all options are similarly tedious).
 
