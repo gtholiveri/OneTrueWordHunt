@@ -244,6 +244,6 @@ public class GameUIStage extends Stage {
     }
 
     public float getInfoTableDistFromTop() {
-        return Gdx.graphics.getHeight() - (infoTable.getY());
+        return infoTable.getHeight();//Gdx.graphics.getHeight() - (infoTable.getY());
     }
 }

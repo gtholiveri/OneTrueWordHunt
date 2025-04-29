@@ -1,15 +1,13 @@
 package com.TrueWordHunt.Game;
 
-import com.TrueWordHunt.Util.ClipDrawer;
-import com.TrueWordHunt.Util.Swoopable;
 import com.TrueWordHunt.WordGame;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.kotcrab.vis.ui.widget.VisImageTextButton;
 import com.kotcrab.vis.ui.widget.VisTable;
@@ -24,6 +22,9 @@ public class GameStage extends Stage {
     private Tile[][] tiles;
 
     private int tileSize;
+
+    // tables
+    private VisTable boardTable;
 
 
     public GameStage(Viewport viewport, WordGame game, GameScreen screen) {
@@ -78,9 +79,10 @@ public class GameStage extends Stage {
     }
 
     private void setupBoard() {
-        VisTable boardTable = new VisTable();
+        boardTable = new VisTable();
+        //boardTable.debug();
         boardTable.setFillParent(true);
-        boardTable.center();
+        boardTable.align(Align.bottom);
         boardTable.defaults().space(tileSize / 10);
 
 
@@ -101,8 +103,17 @@ public class GameStage extends Stage {
         //float infoTableHeight = screen.getGameUIStage().getInfoTable().getHeight();
         //float gameAreaMaxHeight = Gdx.graphics.getHeight() - infoTableHeight;
 
+        boardTable.padBottom(getGameBottomPad());
+
         this.addActor(boardTable);
 
+    }
+
+    private float getGameBottomPad() {
+
+        float topInfoBoxSpace = gameUI.getInfoTableDistFromTop();
+        float availGameHeight = Gdx.graphics.getHeight() - topInfoBoxSpace;
+        return (availGameHeight - boardTable.getMinHeight()) / 2;
     }
 
     @Override
@@ -110,6 +121,8 @@ public class GameStage extends Stage {
 
 
         super.draw();
+        boardTable.padBottom(getGameBottomPad());
+
     }
 
     public Tile[][] getTiles() {
