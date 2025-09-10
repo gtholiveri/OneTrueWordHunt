@@ -1,5 +1,9 @@
+# What it is
+A singleplayer PC version of GamePigeon's Word Hunt, built using the libGDX framework.
+
+
 # Final Project: Word Hunt
-## How to run
+## How to grade
 Clone repository in intellij, create a new application run configuration, and select the Lwjgl3Launcher class as the
 main class.
 
